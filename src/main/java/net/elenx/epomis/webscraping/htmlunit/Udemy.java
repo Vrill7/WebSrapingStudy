@@ -9,7 +9,7 @@ import java.util.List;
 
 import static net.elenx.epomis.webscraping.UdemyStatics.*;
 
-public class Udemy {
+class Udemy {
 
     private static final int TIMEOUT_MILLIS = 5000;
     private static final int TIMEOUT_SEC = 5;
