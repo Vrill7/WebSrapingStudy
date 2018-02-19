@@ -5,8 +5,11 @@ import com.gargoylesoftware.htmlunit.html.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 class Praca {
+
+    private static final Logger LOG = Logger.getLogger(Praca.class.getName());
 
     public static void main(String[] args) {
         Praca praca = new Praca();
@@ -22,35 +25,35 @@ class Praca {
             String searchPhraseInput = "data[Search][phrase]";
             String searchPlaceInput = "data[Search][place]";
 
-            System.out.println("#1 - base url");
+            LOG.info("#1 - base url");
             final HtmlPage basePage = webClient.getPage(BASE_URL);
-            System.out.println(basePage.getBaseURI());
+            LOG.info(basePage.getBaseURI());
             HtmlUnitHelper.printCookies(webClient);
 
-            System.out.println("#3 - get forms");
+            LOG.info("#3 - get forms");
             HtmlForm serachForm = basePage.getForms().get(0);
-            System.out.println(serachForm.toString());
+            LOG.info(serachForm.toString());
 
-            System.out.println("#4 - get form input");
+            LOG.info("#4 - get form input");
             HtmlInput phrase = serachForm.getInputByName(searchPhraseInput);
             HtmlInput place = serachForm.getInputByName(searchPlaceInput);
             phrase.setValueAttribute("java");
             place.setValueAttribute("łódź");
 
-            System.out.println("#5 - send form");
+            LOG.info("#5 - send form");
             
             HtmlPage feedPage = serachForm.click();
-            System.out.println("### - waiting");
+            LOG.info("### - waiting");
             webClient.waitForBackgroundJavaScript(HtmlUnitHelper.TIMEOUT_MILLIS);
 
-            System.out.println("#7 - feedPage as text");
-//            System.out.println(feedPage.getBody().asText());
-//            System.out.println("#7 - coursesPage as xml");
-//            System.out.println(feedPage.getBody().asXml());
+            LOG.info("#7 - feedPage as text");
+//            LOG.info(feedPage.getBody().asText());
+//            LOG.info("#7 - coursesPage as xml");
+//            LOG.info(feedPage.getBody().asXml());
 
             DomNode querySelector = feedPage.querySelector("ul.listing-announcement_new");
-            System.out.println("#7 - coursesPage ul as xml");
-            System.out.println(querySelector.asXml());
+            LOG.info("#7 - coursesPage ul as xml");
+            LOG.info(querySelector.asXml());
             webClient.close();
         } catch (IOException e) {
             e.printStackTrace();

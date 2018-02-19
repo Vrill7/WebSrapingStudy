@@ -9,9 +9,12 @@ import io.webfolder.ui4j.api.dom.Element;
 import java.util.Optional;
 
 import static io.webfolder.ui4j.api.browser.BrowserFactory.getWebKit;
+import java.util.logging.Logger;
 import static net.elenx.epomis.webscraping.LinkedinStatics.*;
 
 public class LinkedIn {
+
+    private static final Logger LOG = Logger.getLogger(LinkedIn.class.getName());
 
     private static final int TIMEOUT_MILLIS = 5000;
     private static final int TIMEOUT_SEC = 5;
@@ -36,7 +39,6 @@ public class LinkedIn {
             Optional<Element> jobsLink = document.query("[href=/jobs/]a");
             jobsLink.ifPresent(element -> element.click());
 
-
 //            Page jobsPage = getWebKit().navigate("https://www.linkedin.com/jobs/");
 //            wait1Second();
 //            Optional<Element> query = jobsPage.getDocument().query("[role=combobox]input");
@@ -49,7 +51,7 @@ public class LinkedIn {
                 .getDocument()
                 .queryAll("a")
                 .forEach(e -> {
-                    System.out.println(e.getText().get());
+                    LOG.info(e.getText().get());
                 });
     }
 

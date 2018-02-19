@@ -4,6 +4,9 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
 import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HTMLParserListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -11,7 +14,10 @@ import com.gargoylesoftware.htmlunit.WebClient;
  */
 class WebClientConf {
 
+    private static final Logger LOG = Logger.getLogger(WebClientConf.class.getName());
+
     static WebClient getConfiguredWebClient() {
+        LOG.log(Level.CONFIG, "Create and configure WebClient");
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         webClient.getCookieManager().setCookiesEnabled(true);
         webClient.getOptions().setJavaScriptEnabled(true);
@@ -28,6 +34,8 @@ class WebClientConf {
 
         webClient.getOptions().setCssEnabled(false);
         webClient.setCssErrorHandler(new SilentCssErrorHandler());
+        
+        webClient.setHTMLParserListener(HTMLParserListener.LOG_REPORTER);
         return webClient;
     }
 }

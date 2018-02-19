@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * Więcej info http://htmlunit.sourceforge.net/gettingStarted.html
@@ -16,13 +17,14 @@ import java.util.Set;
  */
 class HtmlUnitHelper {
 
+    private static final Logger LOG = Logger.getLogger(HtmlUnitHelper.class.getName());
     static final String CLASS = "class";
     static final int TIMEOUT_MILLIS = 7000;
     static final int TIMEOUT_SEC = 5;
 
     static HtmlPage getAjaxPage(WebClient webClient, String pageUrl) throws IOException {
         final HtmlPage htmlPage = webClient.getPage(pageUrl);
-        System.out.println("### - waiting");
+        LOG.info("### - waiting");
         webClient.waitForBackgroundJavaScript(TIMEOUT_MILLIS);
         return htmlPage;
     }
@@ -75,24 +77,24 @@ class HtmlUnitHelper {
     static void printAllAnchors(HtmlPage page) {
         List<HtmlAnchor> anchors = page.getAnchors();
         anchors.forEach((anchor) -> {
-            System.out.println(anchor);
+            LOG.info(anchor.asText());
         });
     }
 
     static void printAllForms(HtmlPage page) {
         List<HtmlForm> forms = page.getForms();
-        System.out.println("forms count:" + forms.size());
+        LOG.info("forms count:" + forms.size());
         forms.forEach((form) -> {
-            System.out.println(form.toString());
+            LOG.info(form.toString());
         });
     }
 
     static void printCookies(WebClient webClient) {
-        System.out.println("## printCookies");
+        LOG.info("## printCookies");
         Set<Cookie> cookies = webClient.getCookieManager().getCookies();
         cookies.forEach((cookie) -> {
-            System.out.println(cookie.getName());
+            LOG.info(cookie.getName());
         });
-        System.out.println("## printCookies end");
+        LOG.info("## printCookies end");
     }
 }

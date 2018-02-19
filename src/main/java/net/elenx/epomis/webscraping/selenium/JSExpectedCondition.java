@@ -1,5 +1,6 @@
 package net.elenx.epomis.webscraping.selenium;
 
+import java.util.logging.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author Piotr Karasiński
  */
 public class JSExpectedCondition {
+
+    private static final Logger LOG = Logger.getLogger(JSExpectedCondition.class.getName());
 
     public static ExpectedCondition<Boolean> getJQueryExpectedCondition(WebDriver driver) {
         // wait for jQuery to load

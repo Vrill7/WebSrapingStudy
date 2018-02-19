@@ -3,6 +3,7 @@ package net.elenx.epomis.webscraping.selenium;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,9 @@ import static net.elenx.epomis.webscraping.UdemyStatics.*;
 
 public class Udemy {
 
+    private static final Logger LOG = Logger.getLogger(Udemy.class.getName());
+
+    
     private static final int TIMEOUT_MILLIS = 5000;
     private static final int TIMEOUT_SEC = 5;
 
@@ -39,10 +43,10 @@ public class Udemy {
         WebElement textField = driver.findElement(By.name("q"));
         // Enter something to search for
         textField.sendKeys(text);
-        System.out.println("start Url is: " + driver.getCurrentUrl());
+        LOG.info("start Url is: " + driver.getCurrentUrl());
         // Now submit the form. WebDriver will find the form for us from the element
         textField.submit();
-        System.out.println("Url after submit is: " + driver.getCurrentUrl());
+        LOG.info("Url after submit is: " + driver.getCurrentUrl());
 
         // Wait for the page to load, timeout after 10 seconds
         Thread.sleep(TIMEOUT_MILLIS);// webdriverwait nie radzi sobie 
@@ -55,11 +59,11 @@ public class Udemy {
 //        driverWait.until(JSExpectedCondition.getJavaScriptExpectedCondition(driver));
 //        driverWait.until(JSExpectedCondition.getJQueryExpectedCondition(driver));
 
-//        System.out.println("driver.getPageSource()" + driver.getPageSource());
+//        LOG.info("driver.getPageSource()" + driver.getPageSource());
         List<WebElement> findElements = driver.findElements(By.cssSelector("a.search-course-card--card__title--1moSD"));
-        System.out.println("findElements:" + findElements.size());
+        LOG.info("findElements:" + findElements.size());
         for (WebElement element : findElements) {
-            System.out.println(element.getAttribute("href"));
+            LOG.info(element.getAttribute("href"));
         }
         //Close the browser
         driver.quit();
